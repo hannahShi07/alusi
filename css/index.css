@@ -750,8 +750,9 @@ body {
 .service-wrap .inner {
     background-color: #fff;
     border: 1px solid #e6e6e6;
-    height: 735px;
+    min-height: 735px;
     padding-top: 80px;
+    padding-bottom: 20px;
     position: relative;
     overflow: hidden;
 }
@@ -800,6 +801,7 @@ body {
     padding: 26px;
     border: 1px solid #e6e6e6;
     position: relative;
+    margin-bottom: 15px;
 }
 .service-wrap .info-block .left-txt {
     padding-right: 153px;

@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<div class="mainwrapper homepage-wrapper">
+<div class="mainwrapper homepage-wrapper" id="app">
     <div class="header">
         <div class="left-logo"><img src="images/logo.png" alt=""></div>
         <ul class="nav-list clearfix">
             <li><a href="./index.html">首页</a></li>
             <li><a href="./list.html">更多产品</a></li>
             <li><a href="./about-us.html">关于我们</a></li>
-            <li><a href="./service.html">服务与支持</a></li>
+            <li class="actived"><a href="./service.html">服务与支持</a></li>
         </ul>
         <a href="https://www.jd.com/" class="right-btn-link" target="_blank">京东商城</a>
     </div>
@@ -27,11 +27,17 @@
            <div class="wrap">
                <div class="tit">阿露思牧业产品销售门店查询</div>
                <div class="select-list">
-                   <select name="" id=""><option value="">选择省份</option><option value="巴彦淖尔市">巴彦淖尔市</option><option value="通辽市">通辽市</option></select>
-                   <select name="" id=""><option value="">选择城市</option><option value="乌拉特前旗">乌拉特前旗</option><option value="乌拉特中旗">乌拉特中旗</option><option value="扎鲁特旗">扎鲁特旗</option></select>
-                   <select name="" id=""><option value="">选择区域</option><option value="广通南">广通南</option><option value="小平饭店">小平饭店</option><option value="鲁北镇">鲁北镇</option></select>
+                   <select v-model='prov' @change="changeCity();changeCity1()">
+                       <option v-for="(item,i) in items">{{item.name}}</option>
+                   </select>
+                   <select v-model='city' @change="changeCity1">
+                        <option v-for="(item,i) in cityArr">{{item.name}}</option>
+                   </select>
+                   <select v-model='city1'>
+                       <option v-for="(item,i) in cityArr1">{{item.name}}</option>
+                   </select>
                </div>
-               <div class="info-block">
+               <div class="info-block" v-show="prov==='请选择城市' || city1 === '广通南'">
                    <div class="left-txt">
                        <p>店名：阿露思兽药</p>
                        <p>位置：巴彦淖尔市乌拉特前旗阿露思兽药店，广通南菜市场北门斜对面。</p>
@@ -41,7 +47,7 @@
                        <img src="./images/ewm.png" alt="">
                    </div>
                </div>
-			   <div class="info-block">
+			   <div class="info-block" v-show="prov==='请选择城市' || city1 === '小平饭店'">
 			       <div class="left-txt">
 			           <p>店名：阿露思兽药</p>
 			           <p>位置：巴彦淖尔市乌拉特中旗阿露思兽药店，小平饭店红绿灯南50米路西。</p>
@@ -51,7 +57,7 @@
 			           <img src="./images/ewm.png" alt="">
 			       </div>
 			   </div>
-			   <div class="info-block">
+			   <div class="info-block" v-show="prov==='请选择城市' || city1 === '鲁北镇'">
 			       <div class="left-txt">
 			           <p>店名：阿露思兽药</p>
 			           <p>位置：通辽市扎鲁特旗鲁北镇阿露思兽药店，旧汽车站西街。</p>
@@ -69,7 +75,7 @@
         <div class="inner-block">
             <img src="images/logo.png" alt="" class="bt-logo">
             <p>©2016 阿露思牧业有限责任公司 版权所有</p>
-                联系电话：15847802536
+            <p> 联系电话：15847802536
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 技术支持：阿露思牧业
             </p>
@@ -83,6 +89,7 @@
 <script src="js/fastclick.js"></script>
 <script src="js/swiper-6.4.15.jquery.min.js"></script>
 <script src="js/public.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
 <!-- Initialize Swiper -->
 <script>
@@ -96,6 +103,73 @@
             el: '.swiper-pagination',
         },
     });
+</script>
+<script>
+    var id=1;
+    new Vue({
+        el:'#app',
+        data:{
+            prov:'请选择城市',
+            city:'请选择区域',
+            city1:'请选择城镇',
+            items:[
+                {name:'请选择城市',
+                    sub:[
+                        {name:'请选择区域',sub:[{name:'请选择城镇'}]},
+                    ]
+                },
+                {name:'巴彦淖尔市',
+                    sub:[
+                        {name:'乌拉特前旗',sub:[{name:'广通南'}]},
+                        {name:'乌拉特中旗',sub:[{name:'小平饭店'}]},
+                    ]
+                },
+                {name:'通辽市',
+                    sub:[
+                        {name:'扎鲁特旗',sub:[{name:'鲁北镇'}]},
+                    ]
+                }
+            ],
+            cityArr:[],
+            cityArr1:[]
+        },
+        mounted:function(){//执行默认选择
+            this.changeCity();
+            this.changeCity1();
+        },
+        methods:{
+            changeCity:function(){//省切换
+                var me=this;
+                var item ;
+                me.items.forEach(function(ele){
+                    if(ele.name===me.prov){//判断与prov是否相等，相等的表示被切换选中的省份
+                        item = ele;
+                    }
+                })
+                if(item){
+                    this.cityArr=item.sub;//将选中的item的sub设置给cityArr 用于显示市
+                    this.city=item.sub[0].name;//默认选择第一个市
+
+                    this.cityArr1=[];
+                    this.city1='';
+                }
+
+            },
+            changeCity1:function(){//市切换
+                var me=this;
+                var item ;
+                me.cityArr.forEach(function(ele){
+                    if(ele.name===me.city){//判断与city是否相等，相等的表示被切换选中的市
+                        item = ele;
+                    }
+                })
+                if(item){
+                    this.cityArr1=item.sub;//将选中的item的sub设置给cityArr1 用于显示区
+                    this.city1=item.sub[0].name;//默认选择第一个区
+                }
+            }
+        }
+    })
 </script>
 </body>
 </html>
