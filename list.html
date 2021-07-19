@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<div class="mainwrapper homepage-wrapper">
+<div class="mainwrapper homepage-wrapper" id="app">
     <div class="header">
         <div class="left-logo"><img src="images/logo.png" alt=""></div>
         <ul class="nav-list clearfix">
@@ -25,419 +25,45 @@
     <div class="fixed-filter-box">
         <div class="select-box">
             <label for="">产品类型</label>
-            <select name="" id="">
-                <option value="0">全部</option>
+            <select v-model="productType" name="" @change="changeProductType">
+                <option v-for="(item,i) in items">{{item.name}}</option>
             </select>
         </div>
         <div class="select-box">
             <label for="">分类</label>
-            <select name="" id="">
-                <option value="0">全部</option>
+            <select v-model="type" name="" >
+                <option v-for="(item,i) in typeArr">{{item.name}}</option>
             </select>
         </div>
     </div>
     <ul class="list-wrap">
-        <!--product1-->
-       <li class="list-cell">
+        <!--product-->
+       <li class="list-cell" v-for="(item,i) in productList"
+           :key="'product_'+i"
+           v-show="productType==='全部' || (item.productType===productType && item.type===type) || (item.productType===productType && type==='全部')">
            <div class="innerblcok">
-               <div class="top-product-img"><img src="images/g1.jpg" alt=""></div>
+               <div class="top-product-img"><img :src="item.faceImg" alt=""></div>
                <div class="product-txt-box">
                    <div class="text-box">
                        <div class="product-txt">
-                           <img src="images/list-txt1.png" alt="">
+                           <img :src="item.txtImg" alt="">
                        </div>
                        <div class="txt-wrap">
-                           <div class="tit">阿苯达唑混悬液 Albendazole Suspension</div>
+                           <div class="tit">{{item.name}}</div>
                            <div class="function-use">
-                                <p>产品类型：兽用药物</p>
-                                <p>药物类型：抗蠕虫类</p>
-                                <p>作用于用途：用于治疗畜禽的线虫病、绦虫病和吸虫病</p>
+                                <p>产品类型：{{item.productType}}</p>
+                                <p>药物类型：{{item.type}}</p>
+                                <p>作用于用途：{{item.tips}}</p>
                            </div>
                        </div>
                    </div>
                </div>
                <div class="bottom-btns">
                    <div class="btn normal-btn">了解详情 ></div>
-                   <div class="btn normal-btn">商城购买￥55/个 ></div>
+                   <div class="btn normal-btn">商城购买{{item.price}} ></div>
                </div>
            </div>
        </li>
-        <!--product2-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g2.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt2.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿露思6号（液态畜用复合预混合饲料）</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>原料类型：维生素、微量元素类</p>
-                                <p>作用于用途：用于家畜缺乏的维生素、钙、硒等矿物质微量元素，具有助消化，调整体内物质代谢、增加幼…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product3-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g3.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt3.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿露思1号 （酶立康）</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>药物类型：符合预混合饲料</p>
-                                <p>作用于用途：促进益生菌繁殖，改善肠道菌群结构，提高幼龄、老龄动物消化功能，减轻便秘、降低肠道PH</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product4-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g4.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt4.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿维菌素透皮溶液 Avermectin Pour-on</div>
-                            <div class="function-use">
-                                <p>产品类型：兽用药物</p>
-                                <p>药物类型：抗生素类</p>
-                                <p>作用于用途：用于治疗家畜的线虫病、螨虫和寄生性昆虫病。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product5-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g5.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt5.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">贝贝安 （杨树花粗提物·液态）</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>原料类型：植物提取物</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product6-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g6.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt6.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">奥克赛（伊维菌素折射液 ）</div>
-                            <div class="function-use">
-                                <p>产品类型：兽用药物</p>
-                                <p>原料类型：注射类</p>
-                                <p>作用于用途：用于家畜缺乏的维生素、钙、硒等矿物质微量元素，具有助消化，调整体内物质代谢、增加幼…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product7-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g7.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt7.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">奥奇+特日根（费本尼考+磺胺间甲氧嘧啶钠）</div>
-                            <div class="function-use">
-                                <p>产品类型：兽用药物</p>
-                                <p>药物类型：注射类</p>
-                                <p>作用于用途：促进益生菌繁殖，改善肠道菌群结构，提高幼龄、老龄动物消化功能，减轻便秘、降低肠道…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product8-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g8.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt8.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">马齿笕粗提物 Herba Portulacae Extract</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>药物类型：抗生素类</p>
-                                <p>作用于用途：用于治疗家畜的线虫病、螨虫和寄生性昆虫病。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product9-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g9.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt9.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿露思11号 （金银花粗提物·液态）</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>原料类型：植物提取物</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product10-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g10.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt10.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿露思2号 （黄氏）</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>原料类型：维生素、微量元素类</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product11-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g11.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt11.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿维菌素氯氰碘柳胺钠片</div>
-                            <div class="function-use">
-                                <p>产品类型：兽用药物</p>
-                                <p>原料类型：抗寄生虫</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product12-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g12.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt12.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">清热散 </div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>原料类型：植物提取物</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥55/个 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product13-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g13.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt13.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿露思8号 （黄氏颗粒）</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>原料类型：植物提取物</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥35/袋 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product14-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g14.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt14.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">苏日嘿+赛音 </div>
-                            <div class="function-use">
-                                <p>产品类型：兽用药物</p>
-                                <p>原料类型：针剂类</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥23/盒 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product15-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g15.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt15.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿露思9号 （枳壳）</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>原料类型：植物提取物</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨
-                                    树花具有清热解毒、化湿止泻的功效，本品用于湿…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥34/袋 ></div>
-                </div>
-            </div>
-        </li>
-        <!--product16-->
-        <li class="list-cell">
-            <div class="innerblcok">
-                <div class="top-product-img"><img src="images/g16.jpg" alt=""></div>
-                <div class="product-txt-box">
-                    <div class="text-box">
-                        <div class="product-txt">
-                            <img src="images/list-txt16.png" alt="">
-                        </div>
-                        <div class="txt-wrap">
-                            <div class="tit">阿露思10号（杨金花颗粒）</div>
-                            <div class="function-use">
-                                <p>产品类型：饲料原料</p>
-                                <p>原料类型：植物提取物</p>
-                                <p>作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-btns">
-                    <div class="btn normal-btn">了解详情 ></div>
-                    <div class="btn normal-btn">商城购买￥21/袋 ></div>
-                </div>
-            </div>
-        </li>
     </ul>
     <div class="show-more">
         <div class="txt">已展示16条记录/共105条</div>
@@ -450,7 +76,7 @@
         <div class="inner-block">
             <img src="images/logo.png" alt="" class="bt-logo">
             <p>©2016 阿露思牧业有限责任公司 版权所有</p>
-                联系电话：15847802536
+            <p> 联系电话：15847802536
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 技术支持：阿露思牧业
             </p>
@@ -464,19 +90,188 @@
 <script src="js/fastclick.js"></script>
 <script src="js/swiper-6.4.15.jquery.min.js"></script>
 <script src="js/public.js"></script>
+<script src="js/vue.js"></script>
 
-<!-- Initialize Swiper -->
 <script>
-    var swiper = new Swiper('.swiper-container', {
-        autoplay: {
-            delay: 3000,
-            stopOnLastSlide: false,
-            disableOnInteraction: true,
-     },
-        pagination: {
-            el: '.swiper-pagination',
+    new Vue({
+        el: '#app',
+        data: {
+            productType:'全部',
+            type:'全部',
+            items:[
+                {name:'全部', sub:[{name:'全部'},]},
+                {name:'兽用药物', sub:[{name:'全部'},{name:'抗蠕虫类'},{name:'抗生素类'},{name:'注射类'},{name:'抗寄生虫'},{name:'针剂类'}]},
+                {name:'饲料原料', sub:[{name:'全部'},{name:'维生素、微量元素类'},{name:'符合预混合饲料'},{name:'植物提取物'},{name:'抗生素类'}]},
+            ],
+            typeArr:[],
+            productList:[
+                {
+                    faceImg:'./images/g1.jpg',
+                    txtImg:'./images/list-txt1.png',
+                    name:'阿苯达唑混悬液 Albendazole Suspension',
+                    productType: '兽用药物',
+                    type:'抗蠕虫类',
+                    tips:'用于治疗畜禽的线虫病、绦虫病和吸虫病',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g2.jpg',
+                    txtImg:'./images/list-txt2.png',
+                    name:'阿露思6号（液态畜用复合预混合饲料）',
+                    productType: '饲料原料',
+                    type:'维生素、微量元素类',
+                    tips:'作用于用途：用于家畜缺乏的维生素、钙、硒等矿物质微量元素，具有助消化，调整体内物质代谢、增加幼…',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g3.jpg',
+                    txtImg:'./images/list-txt3.png',
+                    name:'阿露思1号 （酶立康）',
+                    productType: '饲料原料',
+                    type:'符合预混合饲料',
+                    tips:'作用于用途：促进益生菌繁殖，改善肠道菌群结构，提高幼龄、老龄动物消化功能，减轻便秘、降低肠道PH',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g4.jpg',
+                    txtImg:'./images/list-txt4.png',
+                    name:'阿维菌素透皮溶液 Avermectin Pour-on',
+                    productType: '兽用药物',
+                    type:'抗生素类',
+                    tips:'用于治疗家畜的线虫病、螨虫和寄生性昆虫病。',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g5.jpg',
+                    txtImg:'./images/list-txt5.png',
+                    name:'贝贝安 （杨树花粗提物·液态）',
+                    productType: '饲料原料',
+                    type:'植物提取物',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g6.jpg',
+                    txtImg:'./images/list-txt6.png',
+                    name:'奥克赛（伊维菌素折射液 ）',
+                    productType: '兽用药物',
+                    type:'注射类',
+                    tips:'作用于用途：用于家畜缺乏的维生素、钙、硒等矿物质微量元素，具有助消化，调整体内物质代谢、增加幼…',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g7.jpg',
+                    txtImg:'./images/list-txt7.png',
+                    name:'奥奇+特日根（费本尼考+磺胺间甲氧嘧啶钠）',
+                    productType: '兽用药物',
+                    type:'注射类',
+                    tips:'作用于用途：促进益生菌繁殖，改善肠道菌群结构，提高幼龄、老龄动物消化功能，减轻便秘、降低肠道…',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g8.jpg',
+                    txtImg:'./images/list-txt8.png',
+                    name:'马齿笕粗提物 Herba Portulacae Extract',
+                    productType: '饲料原料',
+                    type:'抗生素类',
+                    tips:'用于治疗家畜的线虫病、螨虫和寄生性昆虫病。',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g9.jpg',
+                    txtImg:'./images/list-txt9.png',
+                    name:'阿露思11号 （金银花粗提物·液态）',
+                    productType: '饲料原料',
+                    type:'植物提取物',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g10.jpg',
+                    txtImg:'./images/list-txt10.png',
+                    name:'阿露思2号 （黄氏）',
+                    productType: '饲料原料',
+                    type:'维生素、微量元素类',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g11.jpg',
+                    txtImg:'./images/list-txt11.png',
+                    name:'阿维菌素氯氰碘柳胺钠片',
+                    productType: '兽用药物',
+                    type:'抗寄生虫',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g12.jpg',
+                    txtImg:'./images/list-txt12.png',
+                    name:'清热散',
+                    productType: '饲料原料',
+                    type:'植物提取物',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…',
+                    price:'￥55/个'
+                },
+                {
+                    faceImg:'./images/g13.jpg',
+                    txtImg:'./images/list-txt13.png',
+                    name:'阿露思8号 （黄氏颗粒）',
+                    productType: '饲料原料',
+                    type:'植物提取物',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…',
+                    price:'￥35/袋'
+                },
+                {
+                    faceImg:'./images/g14.jpg',
+                    txtImg:'./images/list-txt14.png',
+                    name:'苏日嘿+赛音',
+                    productType: '兽用药物',
+                    type:'针剂类',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…',
+                    price:'￥23/盒'
+                },
+                {
+                    faceImg:'./images/g15.jpg',
+                    txtImg:'./images/list-txt15.png',
+                    name:'阿露思9号 （枳壳）',
+                    productType: '饲料原料',
+                    type:'植物提取物',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…',
+                    price:'￥34/袋'
+                },
+                {
+                    faceImg:'./images/g16.jpg',
+                    txtImg:'./images/list-txt16.png',
+                    name:'阿露思10号（杨金花颗粒）',
+                    productType: '饲料原料',
+                    type:'植物提取物',
+                    tips:'作用于用途：据《中国兽药典》2015年版二部中记载，杨树花具有清热解毒、化湿止泻的功效，本品用于湿…',
+                    price:'￥21/袋'
+                },
+            ]
         },
-    });
+        mounted:function(){//执行默认选择
+            this.changeProductType();
+        },
+        methods:{
+            // 切换产品类型
+            changeProductType:function (){
+                var me=this;
+                var item ;
+                me.items.forEach(function(ele){
+                    if(ele.name===me.productType){//判断与productType是否相等，相等的表示被切换选中的产品类型
+                        item = ele;
+                    }
+                })
+                if(item){
+                    this.typeArr=item.sub;//将选中的item的sub设置给typeArr 用于显示二级类型
+                    this.type=item.sub[0].name;//默认选择第一个二级类型
+                }
+            },
+        }
+    })
+
 </script>
 </body>
 </html>
